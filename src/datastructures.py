@@ -17,9 +17,13 @@ class FamilyStructure:
         return randint(0, 99999999)
 
     def add_member(self, member):
-        member['id'] = self._generateId()
-        while any(existing_member['id'] == member['id'] for existing_member in self.family):
+        if 'id' in member and any(existing_member['id'] == member['id'] for existing_member in self.family):
+            raise ValueError(f"El ID {member['id']} ya existe en la familia.")
+
+        if 'id' not in member:
             member['id'] = self._generateId()
+            while any(existing_member['id'] == member['id'] for existing_member in self.family):
+                member['id'] = self._generateId()
         self.family.append(member)
 
     def delete_member(self, id):

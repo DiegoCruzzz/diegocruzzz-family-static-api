@@ -12,10 +12,8 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 CORS(app)
 
-# create the jackson family object
 jackson_family = FamilyStructure("Jackson")
 
-# Miembros iniciales 
 John = {
     "first_name": "John",
     "last_name": jackson_family.last_name,
@@ -37,7 +35,6 @@ Jimmy = {
     "lucky_numbers": [1]
 }
 
-# Agregar miembros
 jackson_family.add_member(John)
 jackson_family.add_member(Jane)
 jackson_family.add_member(Jimmy)
@@ -67,7 +64,7 @@ def get_member(id):
     member = jackson_family.get_member(id)
     if member:
         return jsonify(member), 200
-    return jsonify({'error': 'Member not found'}), 404
+    return jsonify({'error': 'Member not found'}), 400
 
 @app.route('/member/<int:id>', methods=['DELETE'])
 def delete_member(id):
